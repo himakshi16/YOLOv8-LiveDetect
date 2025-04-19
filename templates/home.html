@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YOLOv8 Live Detection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center font-sans">
+
+    <div class="bg-white shadow-lg rounded-2xl p-8 max-w-3xl w-full text-center">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">🧠 YOLOv8 Live Object Detection</h1>
+
+        {% if is_streaming %}
+            <div class="mb-6">
+                <img src="{% url 'video_feed' %}" class="rounded-xl w-full border border-gray-300 shadow" />
+            </div>
+            <form action="{% url 'stop_stream' %}" method="post">
+                {% csrf_token %}
+                <button type="submit"
+                    class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                    ⏹ Stop Detection
+                </button>
+            </form>
+        {% else %}
+            <p class="text-gray-600 mb-6">Detection is currently <strong>stopped</strong>.</p>
+            <form action="{% url 'start_stream' %}" method="post">
+                {% csrf_token %}
+                <button type="submit"
+                    class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                    ▶️ Start Detection
+                </button>
+            </form>
+        {% endif %}
+    </div>
+
+    <footer class="mt-10 text-gray-500 text-sm">
+        Made By Himakshi Deshmukh using Django + YOLOv8
+    </footer>
+</body>
+</html>
